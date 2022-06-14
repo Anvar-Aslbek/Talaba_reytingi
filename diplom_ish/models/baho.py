@@ -12,9 +12,6 @@ class Baho(models.Model):
     baho = StatusField()
 
     def __str__(self):
-        return f"{self.talaba_id}ni {self.fan_id}idan bahosi {self.baho}"
-
-    def holat(self):
         t = Baho.objects.filter(talaba_id=self.talaba_id)
         s = 0
         cnt = 0
@@ -30,16 +27,14 @@ class Baho(models.Model):
                 cnt3+=1
             s += int(i.baho)
         if cnt2 >= 3:
-            res = 'kursdan kursga qoladi'
-        elif (30*cnt)/100<cnt3:
-            res = 'stipendiya olmaydi'
+            res = f'{cnt2}ta 2baho kursdan kursga qoladi'
+        elif 100*(cnt3+cnt2)/cnt>=30:
+            res = f'{"%.2f"%(100*(cnt3+cnt2)/cnt)}% 3baho, stipendiya olmaydi'
         elif cnt*5!=s:
-            res = 'stipendiya oladi'
+            res = f'{100*(cnt3+cnt2)/cnt}% 3baho, stipendiya oladi'
         else:
             res = '5 lik stipendiya oladi'
-        
         student = Student.objects.get(id = self.talaba_id.id)
         student.holat = res
         student.save()
-        
-        return f'{student.holat}'
+        return f"{self.talaba_id}ni {self.fan_id}idan bahosi {self.baho}"

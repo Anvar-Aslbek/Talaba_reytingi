@@ -15,9 +15,10 @@ class FacultyAdmin(admin.ModelAdmin):
     search_fields = ('name', 'decan_name')
 
 class BahoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'talaba_id', 'baho', 'holat')
+    list_display = ('id', 'talaba_id', 'fan_id', 'baho')
     list_display_links = ('id', 'talaba_id',)
     search_fields = ('talaba_id', )
+    ordering = ('talaba_id','fan_id')
 
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Faculty, FacultyAdmin)
